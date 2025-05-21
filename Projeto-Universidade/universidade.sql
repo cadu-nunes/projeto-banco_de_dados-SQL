@@ -504,6 +504,7 @@ select*from Telefone_Professor
 select*from Turma
 
 --EXERCÍCIOS
+
 --1) Disciplinas cursadas por um aluno com suas respectivas notas.
 
 SELECT
@@ -585,11 +586,11 @@ WHERE a.ra_aluno = 1005;
 --6) Disciplinas que possuem pré-requisitos.
 
 SELECT
-	d.cod_disciplina,
-	d.nome_disciplina,
-	pr.cod_pre_requisito,
-	dp.nome_disciplina as nome_pre_requisito
+	d.nome_disciplina AS disciplina,
+	dp.nome_disciplina as prerequisito
 FROM Disciplina_PreRequisito pr
 JOIN Disciplina d ON pr.cod_disciplina = d.cod_disciplina
 JOIN Disciplina dp ON pr.cod_pre_requisito = dp.cod_disciplina
-ORDER BY d.cod_disciplina;
+ORDER BY d.nome_disciplina;
+
+--7) 
