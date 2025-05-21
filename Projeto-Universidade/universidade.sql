@@ -534,7 +534,7 @@ SELECT
 FROM Professor_Disciplina pd
 JOIN Professor p ON pd.cod_professor = p.cod_professor
 JOIN Disciplina d ON pd.cod_disciplina = d.cod_disciplina
-WHERE d.cod_disciplina = 1002;
+WHERE d.cod_disciplina = 1;
 
 --3) Alunos matriculados em uma turma específica.
 
@@ -550,7 +550,7 @@ SELECT
 FROM Matricula m
 JOIN Aluno a ON m.ra_aluno = a.ra_aluno
 JOIN Turma t ON m.cod_turma = t.cod_turma
-WHERE t.cod_turma = 1003;
+WHERE t.cod_turma = 2;
 
 --4) Disciplinas obrigatórias de um curso.
 
@@ -593,4 +593,16 @@ JOIN Disciplina d ON pr.cod_disciplina = d.cod_disciplina
 JOIN Disciplina dp ON pr.cod_pre_requisito = dp.cod_disciplina
 ORDER BY d.nome_disciplina;
 
---7) 
+--7) Alunos e seus respectivos cursos
+
+SELECT 
+    a.ra_aluno,
+    a.nome_aluno,
+    a.sobrenome_aluno,
+    c.cod_curso,
+    c.nome_curso,
+    c.tipo,
+    c.turno
+FROM Aluno a
+JOIN Curso c ON a.cod_curso = c.cod_curso
+ORDER BY a.ra_aluno;
