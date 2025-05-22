@@ -606,3 +606,102 @@ SELECT
 FROM Aluno a
 JOIN Curso c ON a.cod_curso = c.cod_curso
 ORDER BY a.ra_aluno;
+
+--8) 
+
+
+--9) Número de alunos por curso.
+
+SELECT 
+    c.cod_curso,
+    c.nome_curso,
+    COUNT(a.ra_aluno) AS total_alunos
+FROM Curso c
+LEFT JOIN Aluno a ON c.cod_curso = a.cod_curso
+GROUP BY c.cod_curso, c.nome_curso
+ORDER BY total_alunos DESC;
+
+--10) Turmas com seus professores responsáveis e disciplinas.
+
+SELECT 
+    t.cod_turma,
+    t.sala,
+    t.ano,
+    t.semestre,
+	t.periodo,
+    p.nome_professor,
+    p.sobrenome_professor,
+	d.nome_disciplina
+FROM Turma t
+JOIN Professor p ON t.cod_professor = p.cod_professor
+JOIN Disciplina d ON t.cod_disciplina = d.cod_disciplina
+ORDER BY t.ano, t.semestre, t.cod_turma;
+
+--11) Sala onde um professor está ministrando aulas.
+
+SELECT 
+    p.cod_professor,
+    p.nome_professor,
+    p.sobrenome_professor,
+    t.cod_turma,
+    t.sala,
+    t.ano,
+    t.semestre,
+	d.nome_disciplina
+FROM Professor p
+JOIN Turma t ON p.cod_professor = t.cod_professor
+JOIN Disciplina d ON t.cod_disciplina = d.cod_disciplina
+WHERE p.cod_professor = 2;
+
+--12) Departamento de um professor, ou seja, a qual departamento ele pertence?
+
+SELECT 
+    p.cod_professor,
+	p.nome_professor,
+	p.sobrenome_professor,
+	d.cod_departamento,
+	d.nome_departamento
+FROM Professor p
+JOIN Departamento d ON p.cod_departamento = d.cod_departamento
+WHERE p.cod_professor = 7;
+--WHERE p.nome_professor = 'Eduardo' AND p.sobrenome_professor = 'Santos'
+
+-- CHECK CONSTRAINTS (RESTRIÇÕES)
+-- 1) Gênero apenas permitido
+
+ALTER TABLE Aluno
+ADD CONSTRAINT chk_genero_aluno
+CHECK (identificacao_genero IN ('Masculino', 'Feminino', 'Outro'));
+
+SELECT*FROM Aluno;
+
+ALTER TABLE Professor
+ADD CONSTRAINT chk_genero_professor
+CHECK (identificacao_genero IN ('Masculino', 'Feminino', 'Outro'));
+
+SELECT*FROM Professor;
+
+--2) Status do aluno permitido
+
+ALTER TABLE Aluno
+ADD CONSTRAINT chk_status_aluno
+CHECK (status_aluno IN ('Ativo', 'Formado', 'Trancado', 'Cancelado'));
+
+SELECT*FROM Aluno;
+
+--3) Status do professor permitido
+
+ALTER TABLE Professor
+ADD CONSTRAINT chk_status_professor
+CHECK (status_professor IN ('Ativo', 'Inativo', 'Licenciado'));
+
+SELECT*FROM Professor;
+
+--4) Tipo de vínculo do professor permitido.
+
+ALTER TABLE Professor
+ADD CONSTRAINT chk_tipo_vinculo
+CHECK (tipo_vinculo IN ('Efetivo', 'Substituto', 'Temporário'));
+
+SELECT*FROM Professor;
+
